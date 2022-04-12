@@ -1,4 +1,5 @@
 import csv
+from functools import reduce
 import statistics
 
 filename = r'C:\Users\nickk\Downloads\DetroitCallsForService.csv'
@@ -23,11 +24,21 @@ for i in range(0,len(cleanList)):
         cleanList[i]['totaltime'] = float(cleanList[i]['totaltime'])
 
 dispatchtimeList = list(map(lambda x: x['dispatchtime'], cleanList))
-reponsetimeList = list(map(lambda x: x['totalresponsetime'], cleanList))
+responsetimeList = list(map(lambda x: x['totalresponsetime'], cleanList))
 totaltimeList = list(map(lambda x: x['totaltime'], cleanList))
 
 print(f"{round(statistics.mean(dispatchtimeList),2)} is the average dispatch time.")
-print(f"{round(statistics.mean(reponsetimeList),2)} is the average response time.")
+print(f"{round(statistics.mean(responsetimeList),2)} is the average response time.")
 print(f"{round(statistics.mean(totaltimeList),2)} is the average total time.")
 
-dispatchTimeAvg = reduce(lambda num1,num2:num1+num2,cleanList,0)
+dispatchtimeTot = reduce(lambda num1, num2: num1+num2, dispatchtimeList, 0)
+avgDispatchTime = dispatchtimeTot/len(dispatchtimeList)
+print(avgDispatchTime)
+
+responsetimeTot = reduce(lambda num1, num2: num1+num2, responsetimeList, 0)
+avgresponseTime = responsetimeTot/len(responsetimeList)
+print(avgresponseTime)
+
+totaltimeTot = reduce(lambda num1, num2: num1+num2, totaltimeList, 0)
+avgtotalTime = totaltimeTot/len(totaltimeList)
+print(avgtotalTime)
